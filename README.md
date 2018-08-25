@@ -2,6 +2,8 @@ Write Sign
 ==============
 This is an extension mod of WorldEdit for [Minetest](http://minetest.net/), so you need WorldEdit mod to use this mod.
 
+This mod adds new WorldEdit command that enables writing to signs via chat command.
+
 For more information, see the [forum topic](https://forum.minetest.net/viewtopic.php?f=9&t=20712) at the Minetest forums.
 
 ![Screenshot](screenshot.png)
