@@ -37,6 +37,7 @@ local sign_list = {
 	"signs_road:black_right_sign",
 	"signs_road:yellow_left_sign",
 	"signs_road:yellow_right_sign",
+	"signs_road:yellow_street_sign",
 	"steles:stone_stele",
 	"steles:sandstone_stele",
 	"steles:desert_stone_stele",
@@ -50,7 +51,7 @@ local function is_sign(check_node)
 		if node_name == check_node then
 			return true
 		end
-	end  
+	end
 	return false
 end
 
