@@ -4,7 +4,6 @@
 
 -- Load stuffs needed by the mod
 local safe_region = dofile(minetest.get_modpath("worldedit_commands") .. "/safe.lua")
-local alias_chatcommand = dofile(minetest.get_modpath("worldedit_shortcommands") .. "/init.lua")
 
 -- List of supported signs
 local sign_list = {
@@ -94,8 +93,14 @@ function worldedit.set_sign_text(pos1, pos2, sign_text)
 						-- If display_api is enabled but not signs_lib
 						elseif minetest.get_modpath("display_api") and not minetest.get_modpath("signs_lib") then
 							if node.name == "signs:paper_poster" then
-								meta:set_string("text", sign_text)
-								local sign_text = sign_text:gsub("\n", " ")
+								local entr = sign_text:find('\n')
+								if entr ~= nil then
+									meta:set_string("text", sign_text)
+									sign_text = sign_text:sub(1,entr-1)
+								else
+									meta:set_string("text", "Press the Edit button.")
+									sign_text = sign_text
+								end
 								meta:set_string("display_text", sign_text)
 								meta:set_string("infotext", "\""..sign_text.."\"\n".."(right-click to read more text)")
 								display_api.update_entities(pos)
@@ -114,8 +119,14 @@ function worldedit.set_sign_text(pos1, pos2, sign_text)
 						-- If both display api and signs_lib are enabled
 						elseif minetest.get_modpath("display_api") and minetest.get_modpath("signs_lib") then
 							if node.name == "signs:paper_poster" then
-								meta:set_string("text", sign_text)
-								local sign_text = sign_text:gsub("\n", " ")
+								local entr = sign_text:find('\n')
+								if entr ~= nil then
+									meta:set_string("text", sign_text)
+									sign_text = sign_text:sub(1,entr-1)
+								else
+									meta:set_string("text", "Press the Edit button.")
+									sign_text = sign_text
+								end
 								meta:set_string("display_text", sign_text)
 								meta:set_string("infotext", "\""..sign_text.."\"\n".."(right-click to read more text)")
 								display_api.update_entities(pos)
@@ -190,4 +201,7 @@ minetest.register_chatcommand("/writesign", {
 })
 
 -- Register alias for /writesign
-worldedit.alias_chatcommand("/ws", "/writesign")
+if minetest.get_modpath("worldedit_shortcommands") then
+	local alias_chatcommand = dofile(minetest.get_modpath("worldedit_shortcommands") .. "/init.lua")
+	worldedit.alias_chatcommand("/ws", "/writesign")
+end
